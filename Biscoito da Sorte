@@ -1,0 +1,129 @@
+import React, {Component} from 'react';
+import {View, Text, StyleSheet,Image,TouchableOpacity} from 'react-native';
+
+class App extends Component{
+
+
+  constructor(props){
+    super(props);
+    this.state = {
+      textoFrase: '',
+      img: require('./src/biscoito.png'),
+    };
+    this.quebraBiscoito = this.quebraBiscoito.bind(this);
+
+    this.Frases = [
+      'Dia de luz',
+      'As trevas lhe ensinarão',
+      'Procure a paz',
+      'Quem esclarece não perece',
+      'Dia de batalhas',
+      'O fraco se acovarda'
+
+    ];
+  }
+
+  quebraBiscoito(){
+    let numeroAleatorio = Math.floor(Math.random() * this.Frases.length);
+
+    this.setState({
+      textoFrase: this.Frases[numeroAleatorio],
+    })
+  }
+
+  render(){
+    return(
+      <View style={styles.container}>
+        <View style={styles.titulo}>
+          <Text style={styles.textoTitulo}>
+            Biscoito Da Sorte
+          </Text>
+        </View>
+      
+        <Image
+        source = {this.state.img}
+        style ={styles.biscoito}
+        />
+
+        <Text 
+        style = {styles.Frase}
+        >
+        {this.state.textoFrase}
+        </Text>
+        <TouchableOpacity style={styles.botao} onPress={this.quebraBiscoito}>
+          <View style={styles.areaViu}>
+            <Text style={styles.textoB}>
+              Botao
+            </Text>
+          
+          </View>
+        </TouchableOpacity>
+          
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  titulo:{
+    marginTop: -100,
+  },
+  textoTitulo:{
+    fontSize:40,
+    color:'orange',
+    textShadowColor: 'black',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 6,
+
+
+
+  },
+  container: {
+    flex:7,
+    alignItems: 'center',
+    justifyContent:'center'
+  },
+  biscoito:{
+    height:250,
+    width:250,
+    marginTop: 70
+  },
+  Frase:{
+    fontSize:30,
+    margin:10,
+    color:'orange',
+  },
+  botao:{
+    borderBlockColor:"Black",
+    borderWidth:2,
+    borderRadius:100,
+    margin:20,
+    width:150,
+    height:40,
+
+
+  },
+  areaViu:{
+    flex:1,
+    flexDirection:'center',
+    alignItems: 'center',
+    justifyContent:'center'
+
+
+
+  },
+  textoB:{
+    fontSize:20,
+    fontWeight:"bold"
+
+
+  },
+
+
+
+});
+
+  
+
+
+export default App;
