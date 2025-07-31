@@ -1,0 +1,144 @@
+import React, {Component} from 'react';
+import {View, 
+      Text, 
+      StyleSheet,
+      Image,
+      TouchableOpacity} 
+      from 'react-native';
+
+class App extends Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      numero: 0,
+      botao: 'INICIAR',
+      ultimo: null,
+ 
+    };
+    this.timer = null;
+    this.iniciar = this.iniciar.bind(this);
+    this.limpar = this.limpar.bind(this);
+
+  }
+  //Basicamente quando você clica no botão lá no primeiro touchableOpacity ele inicia essa função, e como o valor do this.timer está null ali em cima, ele bate no primero if, mas não antende a condição então bate no else e fica fazendo o processo de aumentar o numero, e o valor do this.timer deixa de ser null, então quando você clica na botão de novo com a intenção de parar, ele faz a verificação de novo e bate no if, já que o valor de this.timer deixa de ser null, EXPLICAÇÃO DO CARALEOOOOO
+  iniciar(){
+
+    if (this.timer != null){
+      clearInterval(this.timer);
+      this.timer = null;
+
+      this.setState({botao: 'INICIAR'});
+    }
+    else{
+      this.timer = setInterval(() =>{
+      this.setState({numero: this.state.numero + 0.1})
+    },100);
+      
+
+      this.setState({botao: 'PARAR'});
+    }
+
+    
+    
+  }
+  limpar(){
+    if (this.timer != null){
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+    this.setState({
+      numero : 0,
+      botao: 'INICIAR',
+      ultimo: this.state.numero
+    })
+
+  }
+  
+  render(){
+    return(
+      <View style={styles.areaTotal}>
+        <Image
+        source={require('./src/cronometro.png')}
+        style={styles.areaCronometro}
+        />
+        <Text style={styles.estiloNumero}>
+          {this.state.numero.toFixed(1)} 
+        </Text>
+
+        <View style={styles.estiloP}>
+        <TouchableOpacity style={styles.btnArea} onPress={this.iniciar}>
+            <Text style={styles.estiloTexto}>
+              {this.state.botao}
+            </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btnArea}>
+            <Text style={styles.estiloTexto} onPress={this.limpar}>
+              LIMPAR
+            </Text>
+        </TouchableOpacity>
+        </View>
+        <View style={styles.areaFinal}>
+          <Text style={styles.ultimoTexto}>
+           {this.state.ultimo > 0 ? 'Ultimo Tempo: ' + this.state.ultimo.toFixed(2) + 's' : ''}
+          </Text>
+        </View>
+
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  areaTotal:{
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: 'black'
+    },
+     areaCronometro:{
+    height:250,
+    width:250,
+    marginTop:280
+  },
+  estiloNumero:{
+    fontSize:40,
+    fontWeight:"bold",
+    marginTop:-100
+  },
+  estiloP:{
+    marginTop: 60,
+    flexDirection:'row',
+    height:40
+  },
+  btnArea:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center',
+    margin: 40,
+    height:40,
+    borderRadius:30,
+    backgroundColor: "red"
+  },
+  estiloTexto:{
+    fontSize:23,
+    fontWeight:'bold'
+  },  
+  areaFinal:{
+    flex: 1,
+    marginTop:80,
+  },
+  ultimoTexto: {
+    fontSize:30,
+    color: "white",
+
+  },
+ 
+ 
+
+
+});
+
+  
+
+
+export default App;
