@@ -21,7 +21,7 @@ class App extends Component{
     this.limpar = this.limpar.bind(this);
 
   }
-  //Basicamente quando você clica no botão lá no primeiro touchableOpacity ele inicia essa função, e como o valor do this.timer está null ali em cima, ele bate no primero if, mas não antende a condição então bate no else e fica fazendo o processo de aumentar o numero, e o valor do this.timer deixa de ser null, então quando você clica na botão de novo com a intenção de parar, ele faz a verificação de novo e bate no if, já que o valor de this.timer deixa de ser null, EXPLICAÇÃO DO CARALEOOOOO
+  
   iniciar(){
 
     if (this.timer != null){
