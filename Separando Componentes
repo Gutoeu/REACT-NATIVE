@@ -1,0 +1,85 @@
+import React, {Component} from 'react';
+import {View, 
+      Text, 
+      StyleSheet,
+      FlatList,
+      } 
+      from 'react-native';
+
+      import Pessoas from './src/Pessoas'
+class App extends Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      feed:[
+        {id:1, nome: 'Gustavo', idade:10, email: 'gustavo@gustavo.com'},
+        {id:2, nome: 'Joao', idade:22, email: 'joao@joao.com'},
+        {id:3, nome: 'Pedro', idade:43, email: 'pedro@pedro.com'},
+        {id:4 ,nome: 'Augusto', idade:14, email: 'augusto@augusto.com'},
+        {id:5 ,nome: 'Marcelo', idade:17, email: 'marcelo@marcelo.com'},
+        {id:6 ,nome: 'Valdir', idade:43, email: 'valdir@valdir.com'},
+      ]
+
+    };
+
+  }
+  
+  
+  render(){
+    return(
+      <View style={styles.areaTotal}>
+        <FlatList
+        data={this.state.feed}
+        keyExtractor={(item => item.id)}
+        renderItem={({item}) => <Pessoas data={item}/>}
+
+        />
+
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  areaTotal:{
+    flex: 1,
+    }, 
+});
+
+
+
+  
+
+
+export default App;
+
+import React, { Component } from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+
+class Pessoas extends Component{
+  render(){
+    return(
+      <View style={styles.areaPessoa}>
+        <Text>Olaaaaaaaa</Text>
+        <Text style={styles.textoPessoa}>Nome: {this.props.data.nome}</Text>
+        <Text style={styles.textoPessoa}>Idade: {this.props.data.idade}</Text>
+        <Text style={styles.textoPessoa}>Email: {this.props.data.email}</Text>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  areaPessoa:{
+    backgroundColor: '#222',
+    height: 150,
+    marginBottom: 25,
+    padding: 15
+  },
+  textoPessoa:{
+    color: '#FFF'
+  }
+});
+
+export default Pessoas;
