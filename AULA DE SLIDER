@@ -1,0 +1,66 @@
+import React, {Component} from 'react';
+import {View, 
+      Text, 
+      StyleSheet,
+      } 
+      from 'react-native';
+
+import Slider from '@react-native-community/slider';
+
+
+class App extends Component{
+
+constructor(props){
+  super(props);
+  this.state = {
+    valor: 0
+  };
+}
+  
+  render(){
+    return(
+        <View style={styles.container}>         
+        <Slider  //Função de som basicamente, chama aquela barrinha    
+          minimumValue={0}
+          //valor minimo
+          maximumValue={100}
+          //valor maximo
+          onValueChange={ (valorSelecionado) => this.setState({valor: valorSelecionado})}
+          //coloca o valor dentro da state valor
+          value={this.state.valor}
+          //insere  o valor que ele esta no momento
+          minimumTrackTintColor='#FF0000'
+          //colore oq está antes da bolinha
+          maximumTrackTintColor='blue'
+          //colore oq está depois da bolinha
+      
+        />
+        <Text style={styles.formText}>
+          {this.state.valor.toFixed(1)}
+
+        </Text>
+          
+        </View>
+
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    marginTop:50,
+  },
+  formText:{
+    textAlign:'center',
+    fontSize:30,
+  }
+
+});
+
+
+//UTIL PARA FORMULÁRIOS
+  
+
+
+export default App;
