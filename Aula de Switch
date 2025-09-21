@@ -1,0 +1,56 @@
+import React, {Component} from 'react';
+import {View, 
+      Text, 
+      StyleSheet,
+      SafeAreaView,
+      Switch
+      } 
+      from 'react-native';
+
+import Slider from '@react-native-community/slider';
+
+
+class App extends Component{
+
+constructor(props){
+  super(props);
+  this.state = {
+    status: false
+  };
+}
+  
+  render(){
+    return(
+        <View style={styles.container}>         
+        <Switch
+        value={this.state.status}
+        onValueChange={ (valorSwitch) => this.setState({status: valorSwitch})}
+        //o onValueChange é acionado quando você clica no butão (quando você muda o valor dele), logo toda vez que voce clicar no botão afunção valorSwitch vai ser acionada, e ela tem como objetivo chamar a state 'status' e alterar o valor dele, lembra que tem que usar o this.setState pra mudar o valor de uma state 
+        thumbColor={"red"}
+        />
+        
+
+        <Text style={styles.formText}>
+          {(this.state.status) ? 'Ativo' : 'Não está ativo'}
+        </Text>
+        </View>
+
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    marginTop:50,
+  },
+  formText:{
+    textAlign:'center',
+    fontSize:30,
+  }
+
+});
+
+
+
+export default App;
