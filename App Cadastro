@@ -1,0 +1,175 @@
+import React, {Component} from 'react';
+import {View, 
+      Text, 
+      StyleSheet,
+      SafeAreaView,
+      Switch,
+      TextInput,
+      Button,
+      TouchableOpacity
+      } 
+      from 'react-native';
+
+import Slider from '@react-native-community/slider';
+import {Picker} from '@react-native-picker/picker';
+
+
+class App extends Component{
+
+constructor(props){
+  super(props);
+  this.state = {
+    salario: 0,
+    estuda:false,
+    nome:null,
+    idade:null,
+    sexo: 'M'
+  };
+
+  this.exibir = this.exibir.bind(this);
+}
+  
+  exibir(){
+    alert('Nome do Usuario:' + this.state.nome + '\n' + 
+          'Idade do Usuario:' + this.state.idade + '\n' +
+          'Sexo:' + (this.state.sexo === 'M' ? 'Masculino' : 'Feminino') + '\n' +
+          'Salario:R$' + this.state.salario + '\n' +
+          'Estuda:' + (this.state.estuda ? 'Sim' : 'Não')
+          );
+
+
+  }
+  render(){
+
+
+    
+    return(
+        <View style={styles.container}>       
+        <Text style={styles.textoTitulo}>BANCO REACT</Text>
+        <TextInput style={styles.textoEntrada}
+        placeholder='Digite seu nome'
+        onChangeText={(textoEntrada) => this.setState({nome : textoEntrada})}
+
+        />
+        <TextInput style={styles.textoEntrada2}
+        placeholder='Digite sua idade'
+        onChangeText={(textoEntrada2) => this.setState({idade: textoEntrada2})}
+        
+        />
+        <Picker style={styles.etiloPicker}
+        selectedValue={this.state.sexo}
+        onValueChange={(itemValue, itemIndex) => this.setState({sexo: itemValue})} 
+        >
+          <Picker.Item value={'M'} label='Masculino'/>
+          <Picker.Item  value={'F'} label='Feminino'/>  
+        </Picker>
+
+        <Text style={styles.textoBase}>
+          Selecione seu salario desejado:
+        </Text>
+
+        <Slider style={styles.estiloSlider}
+        minimumValue={0}
+        maximumValue={10000}
+        maximumTrackTintColor='#FFFFFF'
+        onValueChange={(valorSelecionado) => this.setState({salario: valorSelecionado})}
+        />
+        <Text style={styles.textoBase}>
+          R$ {this.state.salario.toFixed(2)}
+        </Text>
+
+        <Text style={styles.textoBase}>
+          Você é estudante?
+        </Text>
+        <Switch style={styles.estiloSwitch}
+        value={this.state.estuda}
+        onValueChange={(valorSwitch) => this.setState({estuda: valorSwitch})}
+        />
+        <Text style={styles.textoBase2}>
+          {(this.state.estuda) ? 'SIM' : 'NÃO'}
+
+     
+        </Text>
+
+        <TouchableOpacity style={styles.estilobotao}>
+          <Text onPress={this.exibir}>
+            CADASTRAR
+          </Text>
+        </TouchableOpacity>
+
+        </View>
+
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:'#363636'
+  },
+  textoTitulo:{
+    textAlign:'center',
+    marginTop:50,
+    color:'#FFFFFF',
+    fontWeight:'bold',
+    fontSize:30
+  },
+  textoEntrada:{
+    borderRadius:15,
+    backgroundColor:'#FFFFFF',
+    marginTop:25,
+    marginHorizontal:30
+  },
+  textoEntrada2:{
+    borderRadius:15,
+    backgroundColor:'#FFFFFF',
+    marginTop:15,
+    marginHorizontal:30
+  },
+
+  formText:{
+    textAlign:'center',
+    fontSize:30,
+  },
+  etiloPicker:{
+    marginTop: 15,
+    marginHorizontal:30,
+    borderRadius:1,
+    backgroundColor:'#FFFFFF'
+  },
+  estiloSlider:{
+    marginTop:15,
+    marginHorizontal:30
+
+  },
+  textoBase:{
+    fontSize:20,
+    color:'#FFFFFF',
+    textAlign:'center',
+    marginTop:15
+  },
+  estiloSwitch:{
+    alignSelf: 'flex-start',
+    marginHorizontal:30,
+
+  },
+  textoBase2:{
+    fontSize:20,
+    color:'#FFFFFF',
+    textAlign:'center',
+    marginTop:-38
+  },
+  estilobotao:{
+    justifyContent:'center',
+    alignItems:'center',
+    marginHorizontal:45,
+    marginTop: 60,
+    height:45,
+    borderRadius:30,
+    backgroundColor: "#147ef7ff"
+  }
+
+}); 
+export default App;
+
