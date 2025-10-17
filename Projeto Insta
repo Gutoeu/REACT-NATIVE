@@ -1,0 +1,302 @@
+import React, {Component} from 'react';
+import {View, 
+        Text, 
+        StyleSheet,
+        SafeAreaView,
+        Image,
+        Touchable,
+        TouchableOpacity,
+        FlatList
+        } 
+        from 'react-native';
+
+import Slider from '@react-native-community/slider';
+import {Picker} from '@react-native-picker/picker';
+
+import Lista from './src/Lista';
+
+class App extends Component{
+
+constructor(props){
+  super(props);
+  this.state = {
+    feed: [
+        {
+          id: '1', 
+          nome: 'Lucas Silva', 
+          descricao: 'Mais um dia de muitos bugs :)', 
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto1.png',  
+          likeada: false, 
+          likers: 0
+         },
+        {
+          id: '2', 
+          nome: 'Matheus', 
+          descricao: 'Isso sim é ser raiz!!!!!', 
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto2.png', 
+          likeada: false, 
+          likers: 0
+        },
+        {
+          id: '3', 
+          nome: 'Jose Augusto', 
+          descricao: 'Bora trabalhar Haha', 
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil3.png', 
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto3.png',  
+          likeada: false, 
+          likers: 3
+        },
+        {
+          id: '4', 
+          nome: 'Gustavo Henrique', 
+          descricao: 'Isso sim que é TI!', 
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil1.png', 
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto4.png', 
+          likeada: false, 
+          likers: 1
+        },
+        {
+          id: '5', 
+          nome: 'Guilherme', 
+          descricao: 'Boa tarde galera do insta...', 
+          imgperfil: 'https://sujeitoprogramador.com/instareact/fotoPerfil2.png', 
+          imgPublicacao: 'https://sujeitoprogramador.com/instareact/foto5.png',
+          likeada: false, 
+          likers: 32
+        }
+      ]
+    
+    
+  };
+
+
+}
+  
+  render(){
+
+
+    
+    return(
+        <View style={styles.container}>       
+        <View style={styles.header}>
+          <TouchableOpacity>
+            <Image
+            source={require('./src/img/logo.png')}
+            style={styles.logo}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image
+            source={require('./src/img/send.png')}
+            style={styles.send}
+            />
+          </TouchableOpacity>              
+            
+        </View>
+        <FlatList
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item) => item.id}
+        data={this.state.feed}
+        renderItem={ ({item}) => <Lista data={item} />}
+        />
+
+  
+
+        </View>
+
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+  },
+  header:{
+    justifyContent:'space-between',
+    height:55,
+    flexDirection:'row',
+    alignItems:'center',
+    padding:8,
+    marginTop:20,
+
+    borderBottomWidth:0.2,
+    shadowColor:'#000',
+    elevation:1
+
+  },
+  logo:{
+    
+  },
+  send:{
+    width:23,
+    height:23
+  },
+  aa:{
+    height:10,
+    width:10
+  }
+}); 
+export default App;
+
+
+
+import React, {Component} from 'react';
+import {View, Text, Image, TouchableOpacity, StyleSheet, Touchable} from 'react-native';
+
+
+class Lista extends Component{
+    constructor (props){
+        super(props);
+        this.state = {
+            feed:this.props.data
+    };
+    this.mostraLikes = this.mostraLikes.bind(this);
+    this.like = this.like.bind(this);
+}
+like(){
+    let feed = this.state.feed;
+
+    if(feed.likeada === true){
+        this.setState({
+            feed:{
+                ...feed,
+                likeada: false,
+                likers: feed.likers - 1
+            }
+        });
+    }
+    else{
+        this.setState({
+            feed:{
+                ...feed,
+                likeada: true,
+                likers: feed.likers + 1
+            }
+        });
+    }
+}
+mostraLikes(likers){
+    let feed = this.state.feed;
+    
+    if (feed.likers <= 0 ){
+        return;
+    }
+
+    return (
+        <Text style={styles.likes}>
+            {feed.likers} {feed.likers < 2 ? 'curtida' : 'curtidas'}
+        </Text>
+    )
+}
+
+
+
+    render(){
+        return(
+            <View style={styles.areaFeed}>
+            <View style={styles.areaDaimg}>
+                <Image
+                resizeMode="cover"
+                source={{uri:this.state.feed.imgperfil}}
+                style={styles.imgPerf}
+                />
+
+                <Text style={styles.nomeUsuario}>
+                    {this.state.feed.nome}
+                </Text>
+
+              
+                
+            </View>
+              <Image
+                source={{uri:this.state.feed.imgPublicacao}}
+                style={styles.imgPubli}
+                />
+            <View style={styles.areaBtn}>
+                <TouchableOpacity onPress={this.like}>
+                    <Image
+                    source={require('../img/like.png')}
+                    style={styles.icons}
+                    />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.touch2}>
+                    <Image
+                    source={require('../img/send.png')}
+                    style={styles.icons}
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.areaText}>
+                <Text style={styles.fonteText}>
+                    {this.state.feed.nome}
+                </Text>
+
+                <Text style={styles.fonteText2}>
+                    {this.state.feed.descricao}
+                </Text>
+            </View>
+            {this.mostraLikes(this.state.feed.likers)}
+            </View>
+
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    areaFeed:{
+
+    },
+    areaDaimg:{
+        flexDirection:'row',
+        flex:1,
+        alignItems:'center',
+        padding:8
+    },
+    imgPubli:{
+        flex:1,
+        height:400,
+        alignItems:'center'
+    },
+    nomeUsuario:{
+        fontSize:16,
+        color:'#000000',
+        textAlign:'left'
+    },
+    imgPerf:{
+        width:50,
+        height:50,
+        borderRadius:25
+    },
+    areaBtn:{
+        flexDirection:'row',
+        padding:6
+    },
+    icons:{
+        width:25,
+        height:25
+    },
+    touch2:{
+        paddingLeft:5
+    },
+    areaText:{
+        flexDirection:'row'
+    },
+    fonteText:{
+        paddingLeft:5,
+        fontWeight:'bold'
+    },
+    fonteText2:{
+        paddingLeft:5
+    },
+    likes:{
+        paddingLeft:5,
+        fontWeight:'bold'
+    }
+
+});
+
+export default Lista;
+
